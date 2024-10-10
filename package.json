@@ -9,6 +9,7 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "start:dev": "tsx watch --inspect=0.0.0.0:9001 src/index.ts",
+    "start:debug": "tsx watch --inspect-brk --inspect=0.0.0.0:9001 src/index.ts",
     "build": "tsc"
   },
   "private": true,

@@ -909,3 +909,59 @@ $ yarn start:dev
 ```
 
 Note: Server restarts but browser has to `refresh` to see new conent
+
+```bash
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ mkdir .vscode
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat .vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Attach to server",
+        "address": "localhost",
+        "port": 9001,
+        "request": "attach",
+        "skipFiles": ["<node_internals>/**"],
+        "type": "node",
+        "restart": true,
+        "timeout": 10000
+      }
+    ]
+  }
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "src/index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx watch --inspect=0.0.0.0:9001 src/index.ts",
+    "build": "tsc"
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "^2.15.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn start:dev
+Debugger listening on ws://0.0.0.0:9001/ec1bc97a-39f1-499e-87ad-f4838400b589
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+```

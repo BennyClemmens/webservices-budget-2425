@@ -256,6 +256,7 @@ app.listen(9000); // 👈 2
 benny@DESKTOP-NJMJN64 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
 $ node index.js
 ```
+
 Note: `yarn start` would have been an option too ...
 
 ![helloworld](img/helloworld.PNG)
@@ -552,3 +553,67 @@ just before the await next in the third middleware
 just behind the await next in the second middleware
 just behind the await next in the first middleware
 ```
+
+```bash
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn add --dev typescript tsx @types/node
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @types/node@npm:22.7.5, tsx@npm:4.19.1, typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40, and 119 more.
+➤ YN0000: └ Completed in 0s 730ms
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 3 packages were added to the project (+ 45.01 MiB).
+➤ YN0000: └ Completed in 9s 463ms
+➤ YN0000: ┌ Link step
+➤ YN0007: │ esbuild@npm:0.23.1 must be built because it never has been before or the last one failed
+➤ YN0000: └ Completed in 1s 972ms
+➤ YN0000: · Done in 12s 217ms
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ git mv index.js index.ts
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat index.ts
+// index.ts
+import Koa from 'koa';
+
+const app = new Koa(); // initialising the Koa-object, i.e. the webserver
+
+const port = 9000;  // easier to change using this const
+
+// middleware functions: get executed in every request
+app.use(async (ctx) => {
+  ctx.body = 'Hello World, now from TypeScript';
+});
+
+app.listen(port);
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx index.ts"
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "^2.15.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn start
+```
+
+![helloworld](img/helloworldts.PNG)

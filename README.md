@@ -1,5 +1,9 @@
 # webservices-budget-2425
 
+## REST API intro
+
+### Repository
+
 ```bash
 Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425
 $ echo "# webservices-budget-2425" >> README.md
@@ -34,6 +38,8 @@ To https://github.com/BennyClemmens/webservices-budget-2425.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
 ```
+
+### Koa
 
 ```bash
 benny@DESKTOP-NJMJN64 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
@@ -260,6 +266,8 @@ $ node index.js
 Note: `yarn start` would have been an option too ...
 
 ![helloworld](img/helloworld.PNG)
+
+### Middleware
 
 ```bash
 benny@fujitsuwin MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
@@ -553,6 +561,8 @@ just before the await next in the third middleware
 just behind the await next in the second middleware
 just behind the await next in the first middleware
 ```
+
+### TypeScript
 
 ```bash
 Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
@@ -910,6 +920,8 @@ $ yarn start:dev
 
 Note: Server restarts but browser has to `refresh` to see new conent
 
+### Debugging
+
 ```bash
 Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
 $ mkdir .vscode
@@ -1015,5 +1027,259 @@ PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add winston
 ➤ YN0000: ┌ Link step
 ➤ YN0000: └ Completed in 0s 259ms
 ➤ YN0000: · Done in 1s 731ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> cat .\src\core\logging.ts
+// src/core/logging.ts
+import winston from 'winston'; // ðŸ‘ˆ importing the winston package
+
+// ðŸ‘‡ initialising a root logger with silly log level and simple formatting
+const rootLogger: winston.Logger = winston.createLogger({
+  level: 'silly',
+  format: winston.format.simple(),
+  transports: [new winston.transports.Console()], // only logging to the console for now
+  // later perhaps: file, database, cloud service, etc.
+});
+
+// here everything is set in one logger, but multible for different parts would be possible
+
+// ðŸ‘‡ exporting the function getLogger which is returning the root logger (a singleton pattern)
+export const getLogger = () => {
+  return rootLogger;
+};
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> cat .\src\index.ts
+// src/index.ts
+import Koa from 'koa';
+import { getLogger } from './core/logging'; // import the getLogger function as a named (<=> default) import
+
+const app = new Koa(); // initialising the Koa-object, i.e. the webserver
+
+const port = 9000;  // easier to change using this const, perhaps later in config?
+
+// middleware functions: get executed in every request
+app.use(async (ctx) => {
+  ctx.body = 'Hello World, now from TypeScript. Added this string to test the watch function';
+});
+
+app.listen(port, () => {
+  getLogger().info(`ðŸš€ Server listening on http://127.0.0.1:${port}`);
+});
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn start    
+info: 🚀 Server listening on http://127.0.0.1:9000
+```
+
+### Linting
+
+```bash
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn add --dev eslint @eslint/js typescript-eslint @stylistic/eslint-plugin
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @eslint/js@npm:9.12.0, @stylistic/eslint-plugin@npm:2.9.0, and 99 more.
+➤ YN0000: └ Completed in 2s 87ms
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 23 packages were added to the project (+ 9.78 MiB).
+➤ YN0000: └ Completed in 0s 662ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed in 1s 209ms
+➤ YN0000: · Done with warnings in 4s 14ms
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "src/index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx watch --inspect=0.0.0.0:9001 src/index.ts",
+    "start:debug": "tsx watch --inspect-brk --inspect=0.0.0.0:9001 src/index.ts",
+    "build": "tsc",
+    "lint": "eslint ."
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "^2.15.3",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "eslint": "^9.12.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.8.1"
+  }
+}
+
+BBenny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat eslint.config.mjs
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
+
+// 👇 helper function to get IntelliSense in our configuration
+export default tseslint.config(
+  eslint.configs.recommended, // 👈 starting configs imported from eslint
+  ...tseslint.configs.recommended, // 👈 starting configs imported from typescript eslint including needed config to read .ts-files
+  {
+    // 👇 our own config
+    files: ['**/*.ts', '**/*.spec.ts'],
+    plugins: {
+      '@stylistic': stylistic, // added the @stylistic plugin to help us check the coding style
+    },
+    rules: { // our own rules, starting with the prefix of the plugin property
+      '@stylistic/no-multiple-empty-lines': [
+        'error',
+        {
+          max: 1,
+          maxEOF: 1,
+          maxBOF: 0,
+        },
+      ],
+      '@stylistic/indent': ['error', 2, { SwitchCase: 1 }],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'always'],
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/no-tabs': ['error'],
+      '@stylistic/max-len': [
+        'error',
+        {
+          code: 120,
+          tabWidth: 2,
+        },
+      ],
+      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
+      '@stylistic/no-inner-declarations': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-empty-object-type': 'off',
+    },
+  },
+);
+
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn lint
+=============
+
+WARNING: You are currently running a version of TypeScript which is not officially supported by @typescript-eslint/typescript-estree.        
+
+You may find that it works just fine, or you may not.
+
+SUPPORTED TYPESCRIPT VERSIONS: >=4.7.4 <5.6.0
+
+YOUR TYPESCRIPT VERSION: 5.6.3
+
+Please only submit bug reports when using the officially supported version.
+
+=============
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\build\index.js
+  5:23  error  'exports' is not defined                 no-undef
+  6:31  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:31  error  'require' is not defined                 no-undef
+
+✖ 3 problems (3 errors, 0 warnings)
+
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> cat .\package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "src/index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx watch --inspect=0.0.0.0:9001 src/index.ts",
+    "start:debug": "tsx watch --inspect-brk --inspect=0.0.0.0:9001 src/index.ts",
+    "build": "tsc",
+    "lint": "eslint ."
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "^2.15.3",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "eslint": "^9.12.0",
+    "tsx": "^4.19.1",
+    "typescript": "~5.5.0",
+    "typescript-eslint": "^8.8.1"
+  }
+}
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn install
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07, typescript@npm:5.5.4   
+➤ YN0085: │ - typescript@npm:5.6.3, typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40   
+➤ YN0000: └ Completed in 0s 358ms
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed in 0s 270ms
+➤ YN0000: · Done with warnings in 0s 884ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> cat .\eslint.config.mjs
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
+
+// ðŸ‘‡ helper function to get IntelliSense in our configuration
+export default tseslint.config(
+  eslint.configs.recommended, // ðŸ‘ˆ starting configs imported from eslint
+  ...tseslint.configs.recommended, // ðŸ‘ˆ starting configs imported from typescript eslint including needed config to read .ts-files        
+  {ignores: ["build/**"]}, // source: https://github.com/eslint/eslint/discussions/18304
+  {
+    // ðŸ‘‡ our own config
+    files: ['**/*.ts', '**/*.spec.ts'],
+    plugins: {
+      '@stylistic': stylistic, // added the @stylistic plugin to help us check the coding style
+    },
+    rules: { // our own rules, starting with the prefix of the plugin property
+      '@stylistic/no-multiple-empty-lines': [
+        'error',
+        {
+          max: 1,
+          maxEOF: 1,
+          maxBOF: 0,
+        },
+      ],
+      '@stylistic/indent': ['error', 2, { SwitchCase: 1 }],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'always'],
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/no-tabs': ['error'],
+      '@stylistic/max-len': [
+        'error',
+        {
+          code: 120,
+          tabWidth: 2,
+        },
+      ],
+      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
+      '@stylistic/no-inner-declarations': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-empty-object-type': 'off',
+    },
+  },
+);
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn lint
 PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
 ```

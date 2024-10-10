@@ -869,3 +869,43 @@ $ tail -2 .gitignore
 # Typescript output (by tsc)
 build
 ```
+
+```bash
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ mkdir src
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ git mv index.ts src/
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx index.ts",
+    "start:dev": "tsx watch src/index.ts",
+    "build": "tsc"
+  },
+  "private": true,
+  "dependencies": {
+    "koa": "^2.15.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn start:dev
+```
+
+Note: Server restarts but browser has to `refresh` to see new conent

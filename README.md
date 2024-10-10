@@ -1000,3 +1000,20 @@ Debugger listening on ws://0.0.0.0:9001/397a6872-0d14-4312-b3e9-50ce10ec9a54
 For help, see: https://nodejs.org/en/docs/inspector
 Debugger attached.
 ```
+
+### Logging
+
+```PS
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add winston
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + winston@npm:3.15.0, @colors/colors@npm:1.6.0, @dabh/diagnostics@npm:2.0.3, @types/triple-beam@npm:1.3.5, and 31 more.
+➤ YN0000: └ Completed in 1s 133ms
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 10 packages were added to the project (+ 1023.24 KiB).
+➤ YN0000: └ Completed in 0s 297ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed in 0s 259ms
+➤ YN0000: · Done in 1s 731ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
+```

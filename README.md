@@ -41,6 +41,8 @@ branch 'main' set up to track 'origin/main'.
 
 ### Koa
 
+Achteraf een `author`-veld toegevoegd en de repository link verwijderd, aangezien deze toch privé is.
+
 ```bash
 benny@DESKTOP-NJMJN64 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
 $ yarn init -p
@@ -1282,4 +1284,142 @@ export default tseslint.config(
 );
 PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn lint
 PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
+```
+
+## REST API bouwen
+
+### Oefening 1: welke endpoints voorzien
+
+De endpoints die we moeten voorzien zijn:
+
+- Transactions
+  - GET /api/transactions: alle transacties opvragen
+  - GET /api/transactions/:id: een specifieke transactie opvragen
+  - POST /api/transactions: een nieuwe transactie aanmaken
+  - PUT /api/transactions/:id: een transactie aanpassen
+  - DELETE /api/transactions/:id: een transactie verwijderen
+- Places
+  - GET /api/places: alle plaatsen opvragen
+  - GET /api/places/:id: een specifieke plaats opvragen
+  - POST /api/places: een nieuwe plaats aanmaken
+  - PUT /api/places/:id: een plaats aanpassen
+  - DELETE /api/places/:id: een plaats verwijderen
+  - GET /api/places/:id/transactions: transacties van een specifieke plaats opvragen
+- Users
+  - GET /api/users: alle gebruikers opvragen
+  - GET /api/users/:id: een specifieke gebruiker opvragen
+  - POST /api/users: een nieuwe gebruiker aanmaken
+  - PUT /api/users/:id: een gebruiker aanpassen
+  - DELETE /api/users/:id: een gebruiker verwijderen
+  - GET /api/users/:id/transactions: transacties van een specifieke gebruiker opvragen
+
+Op basis van de gegeven screenshots kan je wel bepaalde API calls schrappen. Zo is er bijvoorbeeld geen nood aan bv. GET /api/places/:id of POST /api/places. Voor de volledigheid hebben we alle mogelijke API calls neergeschreven.
+
+### Configuratie
+
+```bash
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn add config
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @types/config@npm:3.3.5, config@npm:3.3.12, json5@npm:2.2.3
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: · Done with warnings in 0s 538ms
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ yarn add -D @types/config
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: · Done with warnings in 0s 435ms
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "src/index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx watch --inspect=0.0.0.0:9001 src/index.ts",
+    "start:debug": "tsx watch --inspect-brk --inspect=0.0.0.0:9001 src/index.ts",
+    "build": "tsc",
+    "lint": "eslint --config eslint.config.mjs"
+  },
+  "private": true,
+  "dependencies": {
+    "config": "^3.3.12",
+    "koa": "^2.15.3",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "@types/config": "^3.3.5",
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "eslint": "^9.12.0",
+    "tsx": "^4.19.1",
+    "typescript": "~5.5.0",
+    "typescript-eslint": "^8.8.1"
+  }
+}
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat .env
+NODE_ENV=production
+
+Benny@FLAB2021 MINGW64 /c/DATA/GIT/WEBSERVICES/webservices-budget-2425 (main)
+$ cat package.json
+{
+  "name": "webservices-budget-2425",
+  "version": "1.0.0",
+  "description": "Demo application for the course Web Services.",
+  "main": "src/index.ts",
+  "repository": "git@github.com:BennyClemmens/webservices-budget-2425.git",
+  "license": "MIT",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "start": "tsx --env-file .env src/index.ts",
+    "start:dev": "tsx watch --env-file .env --inspect=0.0.0.0:9001 src/index.ts",
+    "start:debug": "tsx watch --env-file .env --inspect-brk --inspect=0.0.0.0:9001 src/index.ts",
+    "build": "tsc",
+    "lint": "eslint"
+  },
+  "private": true,
+  "dependencies": {
+    "config": "^3.3.12",
+    "koa": "^2.15.3",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "@types/config": "^3.3.5",
+    "@types/koa": "^2.15.0",
+    "@types/node": "^22.7.5",
+    "eslint": "^9.12.0",
+    "tsx": "^4.19.1",
+    "typescript": "~5.5.0",
+    "typescript-eslint": "^8.8.1"
+  }
+}
 ```

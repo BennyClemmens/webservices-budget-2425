@@ -77,3 +77,8 @@ export const deleteById = (id: number) => {
   }
   TRANSACTIONS.splice(index, 1);
 };
+
+export const getTransactionsByPlaceId = (placeId: number) => {
+  return TRANSACTIONS.filter((transaction) => transaction.place.id === placeId);
+  // no check for non existing place, for databank later
+};

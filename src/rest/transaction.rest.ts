@@ -22,6 +22,19 @@ const getTransactionById = async (ctx: Context) => { // id zit nu in ctx.params.
   ctx.body = transactionService.getById(Number(ctx.params.id)); // verdwijnt later na invoervalidatie
 };
 
+const updateTransaction = async (ctx: Context) => {
+  ctx.body = transactionService.updateById(Number(ctx.params.id), {
+    ...ctx.request.body,
+    placeId: Number(ctx.request.body.placeId),
+    date: new Date(ctx.request.body.date),
+  });
+};
+
+const deleteTransaction = async (ctx: Context) => {
+  transactionService.deleteById(Number(ctx.params.id));
+  ctx.status = 204; // why this?
+};
+
 export default (parent: Router) => { // waar deze zich moet onder hangen (/api)
   const router = new Router({
     prefix: '/transactions',
@@ -30,6 +43,9 @@ export default (parent: Router) => { // waar deze zich moet onder hangen (/api)
   router.get('/', getAllTransactions);
   router.get('/:id', getTransactionById);
   router.post('/', createTransaction);
+  router.put('/:id', updateTransaction);
+  router.delete('/:id', deleteTransaction);
+  
   // later : validation and authentication
   
   parent.use(router.routes())  // de router onder de parent hangen

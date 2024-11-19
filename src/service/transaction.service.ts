@@ -40,24 +40,40 @@ export const create = ({ amount, date, placeId, userId }: any) => {
   return newTransaction; // of enkel id?
 };
 
-// id: 1,
-// amount: -2000,
-// date: '2021-05-08T00:00:00.000Z',
-// user: {
-//   id: 1,
-//   name: 'Thomas Aelbrecht',
-// },
-// place: {
-//   id: 2,
-//   name: 'Irish Pub',
-// },
-
-export const updateById = (id: number,{ amount, date, placeId, user }: any) => {
-  getLogger().log(getLogger().level,`${id}, ${amount}, ${date}, ${placeId}, ${user}`);
-  throw new Error('Not implemented yet!');
+export const updateById = (id: number,{ amount, date, placeId, userId }: any) => {
+  getLogger().log(getLogger().level,`${id}, ${amount}, ${date}, ${placeId}, ${userId}`);
+  // throw new Error('Not implemented yet!');
+  const index = TRANSACTIONS.findIndex((t) => t.id === id);
+  if (index === -1) {
+    throw new Error(`no transaction with id ${id} found`); // now http 500, later 
+  }
+  //const existingTransaction = getById(id);
+  const existingPlace = PLACES.find((place) => place.id === placeId);
+  if (!existingPlace) {
+    throw new Error(`no place with id ${placeId} found`);
+  }
+  const existingUser = USERS.find((user) => user.id === userId);
+  if (!existingUser) {
+    throw new Error(`no user with id ${userId} found`); // now http 500, later 
+  }
+  const updatedTransaction = {
+    //...TRANSACTIONS[index],
+    id,
+    amount,
+    date: date.toISOString(),
+    place: existingPlace,
+    user: existingUser,
+    // user: { id: existingUser.id, name: existingUser.name },
+  };
+  TRANSACTIONS[index] = updatedTransaction;
+  return updatedTransaction;
 };
 
 export const deleteById = (id: number) => {
   getLogger().log(getLogger().level,`${id}`);
-  throw new Error('Not implemented yet!');
+  const index = TRANSACTIONS.findIndex((t) => t.id === id);
+  if (index === -1) {
+    throw new Error(`no transaction with id ${id} found`); // now http 500, later 
+  }
+  TRANSACTIONS.splice(index, 1);
 };

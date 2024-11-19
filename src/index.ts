@@ -19,5 +19,6 @@ installRest(app);
 
 app.listen(port, () => {
   //getLogger().info(`🚀 Server listening on http://127.0.0.1:${port}`);
-  getLogger().log(getLogger().level,`🚀 Server listening on http://127.0.0.1:${port}`); // use of config for logging
+  //getLogger().log(getLogger().level,`🚀 Server listening on http://127.0.0.1:${port}`, {error: new Error('test')});
+  getLogger().log(getLogger().level,`🚀 Server listening on http://127.0.0.1:${port}`, {foo: 'bar'});
 });

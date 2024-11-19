@@ -1,9 +1,8 @@
 // src/index.ts
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
-import Router from '@koa/router'; // Router is functie, een constructor  
 import { getLogger } from './core/logging'; // import the getLogger function as a named (<=> default) import
-import * as transactionService from './service/transaction.service';
+import installRest from './rest'; // default: index
 
 const app = new Koa(); // initialising the Koa-object, i.e. the webserver
 
@@ -11,30 +10,12 @@ const port = 9000;  // easier to change using this const, perhaps later in confi
 
 app.use(bodyParser());
 
-const router = new Router();
-
-router.get('/api/transactions', async (ctx) => {
-  ctx.body = {
-    items: transactionService.getAll(), // evt: pagination
-  };
-});
-
-router.get('/api/transactions/:id', async (ctx) => { // id zit nu in ctx.params.id
-  ctx.body = transactionService.getById(Number(ctx.params.id)); // verdwijnt later na invoervalidatie
-});
-
-router.post('/api/transactions', async (ctx) => {
-  // export const create = ({ amount, date, placeId, user }: any)
-  const newTransaction = transactionService.create({
-    ...ctx.request.body, // we gaan er van uit dat dit amount en date is, types: H4
-    placeId: Number(ctx.request.body.placeId),  // later: invoervalidatie
-    date: new Date(ctx.request.body.date),
-  });
-  ctx.body = newTransaction;
-});
-
-app.use(router.routes())  //effectieve routing
-  .use(router.allowedMethods());  //http 405 als de url wel gekend is maar de methode niet toegelaten
+installRest(app);
+//hier zou je ook interfaces kunnen voorzien voor andere clients
+//zoals graphql, GraphQL is an API query language and runtime for interacting with data,
+// designed to provide more flexibility and efficiency than REST (Representational State Transfer).
+//It was developed by Facebook and open-sourced in 2015.
+// trpc jrpc, ...
 
 app.listen(port, () => {
   //getLogger().info(`🚀 Server listening on http://127.0.0.1:${port}`);

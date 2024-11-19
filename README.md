@@ -1513,3 +1513,9 @@ PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add --dev @types/koa-bo
 ```
 
 Added router to index.ts
+
+### Mappenstructuur
+
+#### Datalaag
+
+mock_data.ts toegevoegd

@@ -10,7 +10,11 @@ export const getAll = () => {
 
 export const getById = (id: number) => {
   getLogger().log(getLogger().level,`${id}`);
-  throw new Error('Not implemented yet!');
+  const existingTransaction = TRANSACTIONS.find((transaction) => transaction.id === id);
+  if (!existingTransaction) {
+    throw new Error(`no transaction with id ${id} found`); // now http 500, later 
+  }
+  return existingTransaction; // zonder voorgaande chack zou dit een 204  http zijn wegens undefined, 404 zou beter zijn
 };
 
 export const create = ({ amount, date, placeId, userId }: any) => {

@@ -13,13 +13,17 @@ app.use(bodyParser());
 
 const router = new Router();
 
-router.get('/api/transactions', (ctx) => {
+router.get('/api/transactions', async (ctx) => {
   ctx.body = {
     items: transactionService.getAll(), // evt: pagination
   };
 });
 
-router.post('/api/transactions', (ctx) => {
+router.get('/api/transactions/:id', async (ctx) => { // id zit nu in ctx.params.id
+  ctx.body = transactionService.getById(Number(ctx.params.id)); // verdwijnt later na invoervalidatie
+});
+
+router.post('/api/transactions', async (ctx) => {
   // export const create = ({ amount, date, placeId, user }: any)
   const newTransaction = transactionService.create({
     ...ctx.request.body, // we gaan er van uit dat dit amount en date is, types: H4

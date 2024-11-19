@@ -1,14 +1,13 @@
 // src/index.ts
 import Koa from 'koa';
-import bodyParser from 'koa-bodyparser';
+//import bodyParser from 'koa-bodyparser';
 import { getLogger } from './core/logging'; // import the getLogger function as a named (<=> default) import
 
 const app = new Koa(); // initialising the Koa-object, i.e. the webserver
 
 const port = 9000;  // easier to change using this const, perhaps later in config?
 
-
-app.use(bodyParser());
+//app.use(bodyParser());
 
 // middleware functions: get executed in every request
 app.use(async (ctx) => {

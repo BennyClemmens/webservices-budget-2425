@@ -1423,3 +1423,48 @@ $ cat package.json
   }
 }
 ```
+
+Checking linting
+
+```bash
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn lint
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\config\custom-environment-variables.ts
+  2:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+  3:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\config\development.ts
+  2:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+  3:1  error  Expected indentation of 4 spaces but found 6  @stylistic/indent
+  4:1  error  Expected indentation of 4 spaces but found 6  @stylistic/indent
+  5:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+  6:1  error  Expected indentation of 0 spaces but found 2  @stylistic/indent
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\config\production.ts
+  2:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+  3:1  error  Expected indentation of 4 spaces but found 6  @stylistic/indent
+  4:1  error  Expected indentation of 4 spaces but found 6  @stylistic/indent
+  5:1  error  Expected indentation of 2 spaces but found 4  @stylistic/indent
+  6:1  error  Expected indentation of 0 spaces but found 2  @stylistic/indent
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\src\core\logging.ts
+   3:20  error  Strings must use singlequote        @stylistic/quotes
+  13:1   error  More than 1 blank line not allowed  @stylistic/no-multiple-empty-lines
+
+C:\DATA\GIT\WEBSERVICES\webservices-budget-2425\src\index.ts
+  10:1  error  More than 1 blank line not allowed  @stylistic/no-multiple-empty-lines 
+
+✖ 15 problems (15 errors, 0 warnings)
+  15 errors and 0 warnings potentially fixable with the `--fix` option.
+
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
+```
+
+Fixing
+
+```bash
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn lint
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
+```
+
+Note: In the root directory of the project a `.env`-file must be present. Since this will in the future hold secrets it is not shared on the repository. For now the file only has the content `NODE_ENV=development`

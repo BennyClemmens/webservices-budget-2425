@@ -1,6 +1,6 @@
 // src/core/logging.ts
 import winston from 'winston'; // 👈 importing the winston package
-import config from "config"; // B
+import config from 'config'; // B
 //import { env } from "node:process";  // A
 
 //const NODE_ENV = env['NODE_ENV']; // op te vragen dakzij inmport A, later onnodig
@@ -9,7 +9,6 @@ const LOG_LEVEL = config.get<string>('log.level'); // dankzij B, met opgegeven t
 const LOG_DISABLED = config.get<boolean>('log.disabled');
 
 console.log({NODE_ENV, LOG_LEVEL, LOG_DISABLED});
-
 
 // 👇 initialising a root logger with silly log level and simple formatting
 const rootLogger: winston.Logger = winston.createLogger({

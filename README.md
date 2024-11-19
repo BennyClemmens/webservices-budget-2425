@@ -1519,3 +1519,7 @@ Added router to index.ts
 #### Datalaag
 
 mock_data.ts toegevoegd
+
+#### Servicelaag
+
+Basic getAll voor één entiteit toegevoegd, zonder nog types in te stellen.

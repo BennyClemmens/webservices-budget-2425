@@ -17,6 +17,17 @@ export const PLACES = [
   },
 ];
 
+export const USERS = [
+  {
+    id: 1,
+    name: 'Thomas Aelbrecht',
+  },
+  {
+    id: 2,
+    name: 'Benny Clemmens',
+  },
+];
+
 export const TRANSACTIONS = [
   {
     id: 1,

@@ -1522,4 +1522,36 @@ mock_data.ts toegevoegd
 
 #### Servicelaag
 
+##### GET
+
 Basic getAll voor één entiteit toegevoegd, zonder nog types in te stellen.
+
+##### POST
+
+```bash
+{
+    "amount": 200,
+    "date": "2024-11-19T12:30:00.000Z",
+    "placeId": 1,
+    "userId": 2
+}
+```
+
+Response:
+
+```bash
+{
+    "id": 5,
+    "amount": 200,
+    "date": "2024-11-19T12:30:00.000Z",
+    "place": {
+        "id": 1,
+        "name": "Dranken Geers",
+        "rating": 3
+    },
+    "user": {
+        "id": 2,
+        "name": "Benny Clemmens"
+    }
+}
+```

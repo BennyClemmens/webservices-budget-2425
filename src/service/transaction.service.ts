@@ -1,4 +1,4 @@
-import { TRANSACTIONS } from '../data/mock_data';
+import { PLACES, USERS, TRANSACTIONS } from '../data/mock_data';
 import { getLogger } from '../core/logging';
 
 // CRUD operaties EN logica
@@ -13,10 +13,40 @@ export const getById = (id: number) => {
   throw new Error('Not implemented yet!');
 };
 
-export const create = ({ amount, date, placeId, user }: any) => {
-  getLogger().log(getLogger().level,`${amount}, ${date}, ${placeId}, ${user}`);
-  throw new Error('Not implemented yet!');
+export const create = ({ amount, date, placeId, userId }: any) => {
+  getLogger().log(getLogger().level,`${amount}, ${date}, ${placeId}, ${userId}`);
+  //throw new Error('Not implemented yet!');
+  const existingPlace = PLACES.find((place) => place.id === placeId);
+  if (!existingPlace) {
+    throw new Error(`no place with id ${placeId} found`); // now http 500, later 
+  }
+  const existingUser = USERS.find((user) => user.id === userId);
+  if (!existingUser) {
+    throw new Error(`no user with id ${userId} found`); // now http 500, later 
+  }
+  const maxId = Math.max(...TRANSACTIONS.map((transactions) => transactions.id));
+  const newTransaction = {
+    id: maxId +1,
+    amount,
+    date: date.toISOString(),
+    place: existingPlace,
+    user: existingUser,
+  };
+  TRANSACTIONS.push(newTransaction);
+  return newTransaction; // of enkel id?
 };
+
+// id: 1,
+// amount: -2000,
+// date: '2021-05-08T00:00:00.000Z',
+// user: {
+//   id: 1,
+//   name: 'Thomas Aelbrecht',
+// },
+// place: {
+//   id: 2,
+//   name: 'Irish Pub',
+// },
 
 export const updateById = (id: number,{ amount, date, placeId, user }: any) => {
   getLogger().log(getLogger().level,`${id}, ${amount}, ${date}, ${placeId}, ${user}`);

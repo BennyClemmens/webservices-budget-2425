@@ -19,6 +19,16 @@ router.get('/api/transactions', (ctx) => {
   };
 });
 
+router.post('/api/transactions', (ctx) => {
+  // export const create = ({ amount, date, placeId, user }: any)
+  const newTransaction = transactionService.create({
+    ...ctx.request.body, // we gaan er van uit dat dit amount en date is, types: H4
+    placeId: Number(ctx.request.body.placeId),  // later: invoervalidatie
+    date: new Date(ctx.request.body.date),
+  });
+  ctx.body = newTransaction;
+});
+
 app.use(router.routes())  //effectieve routing
   .use(router.allowedMethods());  //http 405 als de url wel gekend is maar de methode niet toegelaten
 

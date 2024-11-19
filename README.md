@@ -1468,3 +1468,48 @@ PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425>
 ```
 
 Note: In the root directory of the project a `.env`-file must be present. Since this will in the future hold secrets it is not shared on the repository. For now the file only has the content `NODE_ENV=development`
+
+### Router
+
+```bash
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add @koa/router koa-bodyparser
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @koa/router@npm:13.1.0, @types/koa-bodyparser@npm:4.3.12, koa-bodyparser@npm:4.4.1, @hapi/bourne@npm:3.0.0, bytes@npm:3.1.2, and 23 more.
+➤ YN0000: └ Completed in 0s 649ms
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 2 packages were added to the project (+ 357.65 KiB).
+➤ YN0000: └ Completed in 0s 271ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed in 0s 255ms
+➤ YN0000: · Done with warnings in 1s 241ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add --dev @types/koa__router
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @types/koa__router@npm:12.0.4
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed in 0s 246ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: · Done with warnings in 0s 578ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add --dev @types/koa-bodyparser
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed in 0s 243ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: · Done with warnings in 0s 578ms
+```
+
+Added router to index.ts

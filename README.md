@@ -1555,3 +1555,36 @@ Response:
     }
 }
 ```
+### CORS
+
+Added just to get the hang of it.
+
+```bash
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add @koa/cors
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @koa/cors@npm:5.0.0, @types/koa__cors@npm:5.0.0
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed in 0s 297ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed in 0s 211ms
+➤ YN0000: · Done with warnings in 0s 743ms
+PS C:\DATA\GIT\WEBSERVICES\webservices-budget-2425> yarn add --dev @types/koa__cors
+➤ YN0000: · Yarn 4.5.0
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed in 0s 328ms
+➤ YN0000: ┌ Link step
+➤ YN0000: └ Completed
+➤ YN0000: · Done with warnings in 0s 754ms
+```
+
+Config added in config/*.ts, CORS middleware added to src/index.ts

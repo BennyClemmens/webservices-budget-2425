@@ -3,10 +3,27 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { getLogger } from './core/logging'; // import the getLogger function as a named (<=> default) import
 import installRest from './rest'; // default: index
+import config from 'config';
+import koaCors from '@koa/cors';
+
+const port = 9000;  // easier to change using this const, perhaps later in config?
+const CORS_ORIGINS = config.get<string[]>('cors.origins');
+const CORS_MAX_AGE = config.get<number>('cors.maxAge');
 
 const app = new Koa(); // initialising the Koa-object, i.e. the webserver
 
-const port = 9000;  // easier to change using this const, perhaps later in config?
+app.use(
+  koaCors({
+    origin: (ctx) => {
+      if (CORS_ORIGINS.indexOf(ctx.request.header.origin!) !== -1) {
+        return ctx.request.header.origin!;
+      }
+      return CORS_ORIGINS[0] || '';
+    },
+    allowHeaders: ['Accept', 'Content-Type', 'Authorization'],
+    maxAge: CORS_MAX_AGE,
+  }),
+);
 
 app.use(bodyParser());
 

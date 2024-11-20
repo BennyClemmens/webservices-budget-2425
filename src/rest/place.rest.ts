@@ -9,14 +9,6 @@ const getAllPlaces = async (ctx: Context) => {
   };
 };
 
-const createPlace = async (ctx: Context) => {
-  // export const create = ({ amount, date, placeId, user }: any)
-  const newPlace = placeService.create({
-    name: String(ctx.request.body.name),
-  });
-  ctx.body = newPlace;
-};
-
 const getPlaceById = async (ctx: Context) => {
   ctx.body = placeService.getById(Number(ctx.params.id));
 };
@@ -28,6 +20,23 @@ const getTransactionsByPlaceId = async (ctx: Context) => {
   };
 };
 
+const createPlace = async (ctx: Context) => {
+  // export const create = ({ amount, date, placeId, user }: any)
+  const newPlace = placeService.create({
+    name: String(ctx.request.body.name),
+  });
+  ctx.body = newPlace;
+};
+
+const updatePlace = async (ctx: Context) => {
+  const place = placeService.updateById(Number(ctx.params.id), ctx.request.body!);
+  ctx.body = place;
+};
+const deletePlace = async (ctx: Context) => {
+  placeService.deleteById(Number(ctx.params.id));
+  ctx.status = 204;
+};
+
 export default (parent: Router) => {
   const router = new Router({
     prefix: '/places',
@@ -35,8 +44,10 @@ export default (parent: Router) => {
 
   router.get('/', getAllPlaces);
   router.get('/:id', getPlaceById);
-  router.post('/', createPlace);
   router.get('/:id/transactions', getTransactionsByPlaceId);
+  router.post('/', createPlace);
+  router.put('/:id', updatePlace);
+  router.delete('/:id', deletePlace);
   
   parent.use(router.routes())
     .use(router.allowedMethods());
